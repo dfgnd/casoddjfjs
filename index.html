@@ -173,7 +173,7 @@ body {
     const nickname = params.get('nickname');
     const balance = params.get('balance');
 
-    // Обновляем DOM
+    // Обновляем DOM (если есть)
     if (userId) {
         document.querySelector('#id div:nth-child(2)').textContent = 'ID TG: ' + userId;
     } else {
@@ -194,10 +194,10 @@ body {
 
     // Обработчик профиля
     document.getElementById('profileButton').onclick = () => {
-        if (userId && nickname && balance !== null) {
+        if (userId) {
             window.location.href=`https://jdfhg321.github.io/gfdjfgk/profil.html?user_id=${encodeURIComponent(userId)}`;
         } else {
-            alert('Данные профиля не получены.');
+            alert('Не удалось получить ID пользователя');
         }
     };
 
