@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Казино</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/supabase.min.js"></script>
 <style>
 body {
     margin: 0;
@@ -174,16 +173,35 @@ body {
     const nickname = params.get('nickname');
     const balance = params.get('balance');
 
-    // Обновляем DOM (если есть соответствующие элементы)
-    // Например, если есть элементы с id 'id', 'nickname', 'balance-display'
-    // Можно добавить их, если нужно
+    // Обновляем DOM
+    if (userId) {
+        document.querySelector('#id div:nth-child(2)').textContent = 'ID TG: ' + userId;
+    } else {
+        document.querySelector('#id div:nth-child(2)').textContent = 'ID TG: не указан';
+    }
 
-    // Обработчик профиля - по вашей просьбе
+    if (nickname) {
+        document.querySelector('#nickname div:nth-child(2)').textContent = nickname;
+    } else {
+        document.querySelector('#nickname div:nth-child(2)').textContent = 'Нет никнейма';
+    }
+
+    if (balance !== null) {
+        document.getElementById('balance-display').innerHTML = '💰 Ваш баланс: <span style="font-size:24px;">' + balance + '₽</span>';
+    } else {
+        document.getElementById('balance-display').innerHTML = '💰 Ваш баланс: <span style="font-size:24px;">0₽</span>';
+    }
+
+    // Обработчик профиля
     document.getElementById('profileButton').onclick = () => {
-        window.location.href='https://dfgnd.github.io/dfgkdkgndfgkdfgdfgdgdgdngdngmnPROF/';
+        if (userId && nickname && balance !== null) {
+            window.location.href=`https://jdfhg321.github.io/gfdjfgk/profil.html?user_id=${encodeURIComponent(userId)}`;
+        } else {
+            alert('Данные профиля не получены.');
+        }
     };
 
-    // Обработчики игр (пример)
+    // Обработчики игр
     document.getElementById('gameButton').onclick = () => { window.location.href='https://ваш-сайт/игра1?user_id=' + encodeURIComponent(userId); };
     document.getElementById('gameButton2').onclick = () => { window.location.href='https://ваш-сайт/игра2?user_id=' + encodeURIComponent(userId); };
     document.getElementById('gameButton3').onclick = () => { window.location.href='https://ваш-сайт/игра3?user_id=' + encodeURIComponent(userId); };
