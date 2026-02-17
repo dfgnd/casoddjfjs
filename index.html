@@ -126,7 +126,7 @@ body {
 
 <!-- Ваши кнопки -->
 <div class="buttons-container">
-    <div class="content_slot"><button class="image-button" id="gameButton"><img src="avatarki/piramida.jpg" alt="Перейти" /></button></div>
+    <div class="content_slot"><button class="image-button" id="gameButton1"><img src="avatarki/piramida.jpg" alt="Перейти" /></button></div>
     <div class="content_slot"><button class="image-button" id="gameButton2"><img src="avatarki/saper.jpg" alt="Перейти" /></button></div>
 </div>
 <div class="buttons-container2">
@@ -149,7 +149,7 @@ body {
 <!-- Навигация -->
 <div class="bottom-nav">
     <button onclick="window.location.href='https://jdfhg321.github.io/gfdjfgk/'">Игры</button>
-    <button id="profileButton">Профиль</button>
+    <button id="profileBtn">Профиль</button>
 </div>
 
 <!-- Окно ставки -->
@@ -167,33 +167,25 @@ body {
     const tg = window.Telegram.WebApp;
     tg.ready();
 
-    // Получаем параметры из initData
+    // Получаем параметры
     const params = new URLSearchParams(tg.initData);
     const userId = params.get('id');
     const nickname = params.get('nickname');
     const balance = params.get('balance');
 
-    // Обновляем DOM (если есть)
-    if (userId) {
-        document.querySelector('#id div:nth-child(2)').textContent = 'ID TG: ' + userId;
-    } else {
-        document.querySelector('#id div:nth-child(2)').textContent = 'ID TG: не указан';
-    }
+    // Обновляем профильную информацию
+    document.querySelector('#id div:nth-child(2)').textContent = userId ? 'ID TG: ' + userId : 'ID TG: не указан';
+    document.querySelector('#nickname div:nth-child(2)').textContent = nickname || 'Нет никнейма';
+    document.getElementById('balance-display')?.remove(); // удалим, если есть
 
-    if (nickname) {
-        document.querySelector('#nickname div:nth-child(2)').textContent = nickname;
-    } else {
-        document.querySelector('#nickname div:nth-child(2)').textContent = 'Нет никнейма';
-    }
-
-    if (balance !== null) {
-        document.getElementById('balance-display').innerHTML = '💰 Ваш баланс: <span style="font-size:24px;">' + balance + '₽</span>';
-    } else {
-        document.getElementById('balance-display').innerHTML = '💰 Ваш баланс: <span style="font-size:24px;">0₽</span>';
-    }
+    // Создаем блок для баланса
+    const balanceDiv = document.createElement('div');
+    balanceDiv.id = 'balance-display';
+    balanceDiv.innerHTML = '💰 Ваш баланс: <span style="font-size:24px;">' + (balance || 0) + '₽</span>';
+    document.body.insertBefore(balanceDiv, document.querySelector('.bottom-nav'));
 
     // Обработчик профиля
-    document.getElementById('profileButton').onclick = () => {
+    document.getElementById('profileBtn').onclick = () => {
         if (userId) {
             window.location.href=`https://jdfhg321.github.io/gfdjfgk/profil.html?user_id=${encodeURIComponent(userId)}`;
         } else {
@@ -202,7 +194,7 @@ body {
     };
 
     // Обработчики игр
-    document.getElementById('gameButton').onclick = () => { window.location.href='https://ваш-сайт/игра1?user_id=' + encodeURIComponent(userId); };
+    document.getElementById('gameButton1').onclick = () => { window.location.href='https://ваш-сайт/игра1?user_id=' + encodeURIComponent(userId); };
     document.getElementById('gameButton2').onclick = () => { window.location.href='https://ваш-сайт/игра2?user_id=' + encodeURIComponent(userId); };
     document.getElementById('gameButton3').onclick = () => { window.location.href='https://ваш-сайт/игра3?user_id=' + encodeURIComponent(userId); };
     document.getElementById('gameButton4').onclick = () => { window.location.href='https://ваш-сайт/игра4?user_id=' + encodeURIComponent(userId); };
